@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Admin\FormRequestSubmit;
 
 class AdminController extends Controller
 {
@@ -32,38 +31,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'slug' => 'required',
-            'alt' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg,webp|max:2048',
-            'description' => 'required',
-            'meta_title' => 'required|max:160',
-            'meta_keyword' => 'required|max:200',
-            'meta_description' => 'required',
-        ]);
-
-        $category = new Category;
-        $category->name = $request->name;
-        $category->slug = $request->slug;
-        $category->alt = $request->alt;
-        $category->description = $request->description;
-        $category->meta_title = $request->meta_title;
-        $category->meta_keyword = $request->meta_keyword;
-        $category->meta_description = $request->meta_description;
-        $category->status = $request->status;
-        $category->created_by = Auth::user()->id;
-
-        if($request->hasFile('image')){
-            $imageName = $request->file('image')->getClientOriginalName();
-            $imageExt = $request->file('image')->getClientOriginalExtension();
-            $changeName = Str::replace($imageName, (uniqid().'.'.$imageExt),$imageName);
-            $saveImage = 'assets/back/upload/category/'.$changeName;
-            $request->image->move(public_path('assets/back/upload/category'),$changeName);
-        }
-        $category->image = $saveImage;
-        $category->save();
-        return redirect()->back()->with('success','Successfully Added');
+        //
     }
 
     /**

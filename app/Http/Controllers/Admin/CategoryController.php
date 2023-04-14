@@ -109,15 +109,15 @@ class CategoryController extends Controller
             $saveImage = $category->image;
         }
 
-        $category->name         =       $request->name;
-        $category->slug         =       $request->slug;
-        $category->image        =       $saveImage;
-        $category->alt          =       $request->alt;
-        $category->status       =       $request->status;
-        $category->description         =       $request->description;
-        $category->meta_title         =       $request->meta_title;
+        $category->name                 =       $request->name;
+        $category->slug                 =       $request->slug;
+        $category->image                =       $saveImage;
+        $category->alt                  =       $request->alt;
+        $category->status               =       $request->status;
+        $category->description          =       $request->description;
+        $category->meta_title           =       $request->meta_title;
         $category->meta_keyword         =       $request->meta_keyword;
-        $category->meta_description         =       $request->meta_description;
+        $category->meta_description     =       $request->meta_description;
         $category->save();
         return redirect()->back()->with('success', 'Successfully Updated');
     }
