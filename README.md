@@ -64,3 +64,22 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+public function blogdetails($slug1,$slug2)
+    {
+        $post = Post::with('category')->whereHas('category',function ($query) use($slug1) {
+            $query->where('slug',$slug1);
+        })->with('role')->where('slug', $slug2)->where('status', 1)->first();
+        if($post){
+            $postview = $post->view;
+            $post->view = $postview+1;
+            $post->save();
+            $meta = [
+                'meta_title' => $post->meta_title,
+                'meta_keyword' => $post->meta_keyword,
+                'meta_description' => $post->meta_description,
+            ];
+            return view('front.pages.blogdetails', compact('post', 'meta'));
+        }
+        return view('front.pages.blogdetails', compact('post'));
+    }
