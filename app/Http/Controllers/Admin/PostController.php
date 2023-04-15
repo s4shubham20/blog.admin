@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\{Post,Category};
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Crypt;
 
 class PostController extends Controller
 {
@@ -12,7 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('back.post.index');
+        $posts = Post::with('category')->where('status', 1)->get();
+        return view('back.post.index', compact('posts'));
     }
 
     /**
@@ -20,7 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('back.post.create');
+        $category = Category::all();
+        return view('back.post.create', compact('category'));
     }
 
     /**
@@ -28,7 +35,45 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:posts',
+            'slug' => 'required|unique:posts',
+            'alt' => 'required',
+            'image' => 'required|mimes:png,jpg,webp,jpeg|max:2048',
+            'category' => 'required',
+            'status' => 'required',
+            'description' => 'required',
+            'yt_iframe' => 'required',
+            'meta_title' => 'required',
+            'meta_keyword' => 'required',
+            'meta_description' => 'required',
+
+        ]);
+
+        $post = new Post;
+        $post->name = $request->name;
+        $post->slug = Str::slug($request->slug);
+        $post->alt = $request->alt;
+        $post->yt_iframe = $request->yt_iframe;
+        $post->category_id = $request->category;
+        $post->status = $request->status;
+        $post->description = $request->description;
+        $post->meta_title = $request->meta_title;
+        $post->meta_keyword = $request->meta_keyword;
+        $post->meta_description = $request->meta_description;
+        $post->created_by = Auth::user()->id;
+
+        if($request->hasFile('image')){
+            $imageName = $request->file('image')->getClientOriginalName();
+            $imageExt = $request->file('image')->getClientOriginalExtension();
+            $path = 'assets/back/upload/post/';
+            $saveImage = Str::replace($imageName ,(uniqid().'.'.$imageExt), $imageName);
+            $saveImageDb = Str::replace($imageName ,($path.$saveImage), $imageName);
+            $request->image->move(public_path($path), $saveImage);
+        }
+        $post->image = $saveImageDb;
+        $post->save();
+        return redirect('admin/post')->with('success','Successfully Added');
     }
 
     /**
@@ -42,24 +87,78 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $eid)
     {
-        //
+        $id = Crypt::decrypt($eid);
+        $categories = Category::all();
+        $post = Post::with('category')->find($id);
+        return view('back.post.edit', compact('post','categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $eid)
     {
-        //
+        $id = Crypt::decrypt($eid);
+        $request->validate([
+            'name' => 'required|unique:posts,name,'.$id,
+            'slug' => 'required|unique:posts,slug,'.$id,
+            'alt' => 'required',
+            'category' => 'required',
+            'status' => 'required',
+            'description' => 'required',
+            'yt_iframe' => 'required',
+            'meta_title' => 'required',
+            'meta_keyword' => 'required',
+            'meta_description' => 'required',
+
+        ]);
+
+        $post = Post::findOrFail($id);
+        $post->name = $request->name;
+        $post->slug = Str::slug($request->slug);
+        $post->alt = $request->alt;
+        $post->yt_iframe = $request->yt_iframe;
+        $post->category_id = $request->category;
+        $post->status = $request->status;
+        $post->description = $request->description;
+        $post->meta_title = $request->meta_title;
+        $post->meta_keyword = $request->meta_keyword;
+        $post->meta_description = $request->meta_description;
+
+        if($request->hasFile('image')){
+            $imageName = $request->file('image')->getClientOriginalName();
+            $imageExt = $request->file('image')->getClientOriginalExtension();
+            $path = 'assets/back/upload/post/';
+            $saveImage = Str::replace($imageName ,(uniqid().'.'.$imageExt), $imageName);
+            $saveImageDb = Str::replace($imageName ,($path.$saveImage), $imageName);
+            $request->image->move(public_path($path), $saveImage);
+            if(File::exists(public_path($post->image))){
+                File::delete(public_path($post->image));
+            }
+        }else{
+            $saveImageDb = $post->image;
+        }
+        $post->image = $saveImageDb;
+
+        $post->save();
+        return redirect()->back()->with('success','Successfully Updated');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $eid)
     {
-        //
+        $id = Crypt::decrypt($eid);
+        $post = Post::findOrFail($id);
+        if(File::exists(public_path($post->image))){
+            File::delete(public_path($post->image));
+        }
+        Post::destroy($id);
+        return redirect()->back()->with('success','Successfully Deleted');
+
     }
 }

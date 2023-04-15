@@ -15,12 +15,12 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form action="{{ route('category.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="category">Name</label>
-                        <input type="text" name="name" class="form-control" id="category" placeholder="Category Name" value="{{ old('name') }}">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{ old('name') }}">
                         @error('name')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -33,9 +33,11 @@
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="category">Cateory</label>
-                        <select name="" id="" class="form-control">
-                            <option value=""> </option>
+                        <label for="category">Category Name</label>
+                        <select name="category" id="category" class="form-control">
+                            @foreach ($category as $item)
+                            <option value="{{ $item->id }}" {{ old('category') == $item->id ?'selected':'' }}>{{ $item->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -47,8 +49,15 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="alt">Image Alt</label>
-                        <input type="alt" name="alt" class="form-control" id="file" placeholder="Alt" value="{{ old('alt') }}">
+                        <input text="text" name="alt" class="form-control" id="file" placeholder="Alt" value="{{ old('alt') }}">
                         @error('alt')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="yt_iframe">Youtube iframe Link</label>
+                        <input type="text" name="yt_iframe" class="form-control" id="yt_iframe" placeholder="Youtube iframe Link" value="{{ old('yt_iframe') }}">
+                        @error('yt_iframe')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

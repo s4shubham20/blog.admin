@@ -19,12 +19,12 @@
                         <a class="nav-link {{ Request::is('admin/category') || Request::is('admin/category/edit*') ? 'active' : '' }}" href="{{ route('category.index') }}"><span class="fa fa-eye"></span>&nbsp;View Category</a>
                     </nav>
                 </div>
-                <a class="nav-link collapsed" href="javascript:void();" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                <a class="nav-link {{ Request::is('admin/post/create') || Request::is('admin/post/index') ? 'active' : 'collapsed' }}" href="javascript:void();" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                     Post
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="collapse {{ Request::is('admin/post/create') || Request::is('admin/post/index') ? 'show':''}}" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link {{ Request::is('admin/post/create') ? 'active' : '' }}" href="{{ route('post.create') }}"><span class="fa fa-plus"></span>&nbsp;Add Post</a>
                         <a class="nav-link {{ Request::is('admin/post/index') ? 'active' : '' }}" href="{{ route('post.index') }}"><span class="fa fa-eye"></span>&nbsp;View Post</a>

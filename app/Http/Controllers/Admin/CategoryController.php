@@ -39,7 +39,7 @@ class CategoryController extends Controller
         $request->validated();
         $category = new Category;
         $category->name = $request->name;
-        $category->slug = Str::replace(' ', '-', $request->slug);
+        $category->slug = Str::slug($request->slug);
         $category->alt = $request->alt;
         $category->description = $request->description;
         $category->meta_title = $request->meta_title;
@@ -57,7 +57,7 @@ class CategoryController extends Controller
         }
         $category->image = $saveImage;
         $category->save();
-        return redirect()->back()->with('success','Successfully Added');
+        return redirect()->route('category.index')->with('success','Successfully Added');
     }
 
     /**
@@ -110,7 +110,7 @@ class CategoryController extends Controller
         }
 
         $category->name                 =       $request->name;
-        $category->slug                 =       $request->slug;
+        $category->slug                 =       Str::slug($request->slug);
         $category->image                =       $saveImage;
         $category->alt                  =       $request->alt;
         $category->status               =       $request->status;
