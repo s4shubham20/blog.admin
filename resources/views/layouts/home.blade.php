@@ -32,6 +32,7 @@
     <script src="{{ asset('assets/back/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
     @if(Session::has('success'))
     <script>
         const myTimeout = setTimeout(myGreeting, 1000);
@@ -46,6 +47,21 @@
         }
     </script>
     @endif
+    <script>
+        CKEDITOR.replace( 'description', {
+        filebrowserUploadUrl: "",
+        filebrowserUploadMethod: 'form'
+    });
+    function DeleteConfirmation()
+    {
+        var result = confirm('Are you sure want to deleted ?');
+        if(result == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    </script>
     @yield('js')
 </body>
 </html>

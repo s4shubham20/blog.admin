@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\{AdminController,CategoryController, PostController};
+use App\Http\Controllers\Admin\{AdminController,CategoryController, PostController,UserController};
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth', 'middleware' => 'isA
     Route::resource('dashboard', AdminController::class);
     Route::resource('category', CategoryController::class);
     Route::resource('post', PostController::class);
+    Route::resource('user', UserController::class);
 });
 // Route::middleware(['auth'])->group(['prefix' => 'admin'], function(){
 

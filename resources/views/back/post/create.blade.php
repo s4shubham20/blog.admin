@@ -82,8 +82,8 @@
                     <h3>Description</h3>
                     <hr class="hr3">
                     <div class="col-md-12 mb-3">
-                        <label for="myTextarea">Description</label>
-                        <textarea name="description" class="form-control" id="myTextarea" cols="30" rows="10">{{ old('description') }}</textarea>
+                        <label for="editor">Description</label>
+                        <textarea name="description" class="form-control" id="editor" cols="30" rows="10">{{ old('description') }}</textarea>
                         @error('description')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
