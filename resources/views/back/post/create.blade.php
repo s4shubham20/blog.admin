@@ -129,4 +129,4 @@
 <script>
     CKEDITOR.replace( 'description');
 </script>
-@show
+@endsection

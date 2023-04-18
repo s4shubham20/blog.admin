@@ -1,5 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Post')
+@section('metatitle', "$category->meta_title")
+@section('metakeyword', "$category->meta_keyword")
+@section('description', "$category->meta_description")
 @section('css')
     <style>
         .category-heading{

@@ -164,4 +164,17 @@ class PostController extends Controller
         return redirect()->back()->with('success','Successfully Deleted');
 
     }
+
+    public function deleteall(Request $request)
+    {
+        $deleteId = $request->ids;
+        $post = Post::whereIn('id', explode(",",$deleteId))->get();
+        foreach ($post as $key => $item) {
+            if(File::exists(public_path($item->image))){
+                File::delete(public_path($item->image));
+            }
+        }
+        Post::whereIn('id',explode(",",$deleteId))->delete();;
+        return redirect()->back()->with('success', 'Successfully Deleted');
+    }
 }

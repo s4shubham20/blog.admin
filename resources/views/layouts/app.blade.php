@@ -6,9 +6,10 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <meta>
+    <title>@yield('metatitle')</title>
+    <meta name="description" content="@yield('description')">
+    <meta name="keywords" content="@yield('metakeyword')">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('assets/back/css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/back/css/custom.css') }}" rel="stylesheet" />

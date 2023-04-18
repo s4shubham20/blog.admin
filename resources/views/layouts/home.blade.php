@@ -40,8 +40,8 @@
             @include('layouts.include.footer')
         </div>
     </div>
-    <script src="{{ asset('assets/back/js/scripts.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="{{ asset('assets/back/js/scripts.js') }}"></script>
     <script src="{{ asset('assets/back/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>

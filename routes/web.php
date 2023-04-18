@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth', 'middleware' => 'isA
     Route::resource('dashboard', AdminController::class);
     Route::resource('category', CategoryController::class);
     Route::resource('post', PostController::class);
+    Route::post('post/deleteall', [PostController::class ,'deleteall'])->name('admin.post.deleteall');
     Route::resource('user', UserController::class);
 });
 
