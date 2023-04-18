@@ -17,7 +17,7 @@
             <h4 class="cardheadin">User Details</h4>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-bordered">
+            <table id="myTable" class="table table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -58,4 +58,6 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js')
 @endsection

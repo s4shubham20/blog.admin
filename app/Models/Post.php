@@ -23,4 +23,9 @@ class Post extends Model
     {
         return $this->attributes['updated_at'] = date('d-M-Y', strtotime($date));
     }
+
+    public function user ()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
 }

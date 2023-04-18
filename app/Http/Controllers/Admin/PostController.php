@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category')->where('status', 1)->get();
+        $posts = Post::with('category')->get();
         return view('back.post.index', compact('posts'));
     }
 
@@ -52,7 +52,10 @@ class PostController extends Controller
 
         $post = new Post;
         $post->name = $request->name;
-        $post->slug = Str::slug($request->slug);
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '-', $request->slug); //Removed all Special Character and replace with hyphen
+        $final_slug = preg_replace('/-+/', '-', $string); //Removed double hyphen
+        $slug = strtolower($final_slug);
+        $post->slug = $slug;
         $post->alt = $request->alt;
         $post->yt_iframe = $request->yt_iframe;
         $post->category_id = $request->category;

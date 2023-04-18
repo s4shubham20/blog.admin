@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-bordered">
+            <table id="myTable" class="table table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -29,7 +29,7 @@
                         <td>
                             <b>Name: </b>{{ $item->name }}
                             <br>
-                            <b>Slug: </b>{{ $item->name }}
+                            <b>Slug: </b>{{ $item->slug }}
                         </td>
                         <td>{{ $item->category->name }}</td>
                         <td>

@@ -13,6 +13,18 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/back/js/tinymce.min.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button{
+            padding: 0px;
+            margin: 0px;
+        }
+        div.dataTables_wrapper div.dataTables_length select {
+            width: 50px;
+            display: inline-block;
+        }
+    </style>
     @yield('css')
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
@@ -29,10 +41,18 @@
         </div>
     </div>
     <script src="{{ asset('assets/back/js/scripts.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="{{ asset('assets/back/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        });
+    </script>
     @if(Session::has('success'))
     <script>
         const myTimeout = setTimeout(myGreeting, 1000);
@@ -48,10 +68,6 @@
     </script>
     @endif
     <script>
-        CKEDITOR.replace( 'description', {
-        filebrowserUploadUrl: "",
-        filebrowserUploadMethod: 'form'
-    });
     function DeleteConfirmation()
     {
         var result = confirm('Are you sure want to deleted ?');
