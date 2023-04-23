@@ -8,7 +8,7 @@
         <div class="card-header">
             <h4 class="headingIn">All Categories</h4>
             <div class="float-right">
-                <a href="{{ route('category.create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> New Record</button></a>
+                <a href="{{ route('category.create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Add New Record</button></a>
             </div>
         </div>
         <div class="card-body">

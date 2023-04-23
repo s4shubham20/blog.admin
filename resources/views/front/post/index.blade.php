@@ -1,7 +1,5 @@
 @extends('layouts.app')
-@section('metatitle', "$category->meta_title")
-@section('metakeyword', "$category->meta_keyword")
-@section('description', "$category->meta_description")
+@section('content')
 @section('css')
     <style>
         .category-heading{
@@ -15,11 +13,12 @@
         }
     </style>
 @show
-@section('content')
 <div class="py-4">
     <div class="container">
         <div class="row">
             <div class="col-md-9">
+                @if (count($count) > 0)
+
                 <div class="category-heading">
                     <h4>{{ $category->name }}</h4>
                 </div>
@@ -38,13 +37,14 @@
                 @empty
                 <div class="card card-shadow mt-4">
                     <div class="card-body">
-                        <h1>Not Post Available</h1>
+                        <h1>No Post Available</h1>
                     </div>
                 </div>
                 @endforelse
                 <div class="paginate mt-4">
                     {{ $post->links() }}
                 </div>
+                @endif
             </div>
             <div class="col-md-3">
                 <div class="border p-2">

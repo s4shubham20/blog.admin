@@ -23,11 +23,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
                     </li>
-                    @php
+                    {{-- @php
                         $categories = App\Models\Category::where('status', 1)->get();
-                    @endphp
+                        $post = App\Models\Post::withCount('post')->where('status', 1)->get();
+                    @endphp --}}
                     @foreach ($categories as $item)
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('category/'.$item->slug) }}">{{ $item->name }}</a>
                     </li>

@@ -3,7 +3,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\front\FrontController;
-use App\Http\Controllers\Admin\{AdminController,CategoryController, PostController,UserController};
+use App\Http\Controllers\Admin\{
+    AdminController,CategoryController, PageController,
+    PostController, SocialMediaController, UserController,
+    SettingController
+};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +31,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth', 'middleware' => 'isA
     Route::resource('post', PostController::class);
     Route::post('post/deleteall', [PostController::class ,'deleteall'])->name('admin.post.deleteall');
     Route::resource('user', UserController::class);
+    Route::resource('page', PageController::class);
+    Route::resource('social', SocialMediaController::class);
+    Route::resource('setting', SettingController::class);
 });
 
 // Route::middleware(['auth'])->group(['prefix' => 'admin'], function(){
@@ -36,3 +43,5 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth', 'middleware' => 'isA
 Route::get('/', [FrontController::class ,'index']);
 Route::get('category/{slug}', [FrontController::class, 'post']);
 Route::get('post/{slug1}/{slug2}', [FrontController::class, 'postdetail']);
+Route::post('newsletter', [FrontController::class, 'newsletter'])->name('newsletter');
+Route::get('/{slug}', [FrontController::class, 'pagedetail']);
