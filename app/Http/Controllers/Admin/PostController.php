@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Postfaq;
+use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\{Post,Category};
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Crypt;
-
+use DB;
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $setting = Setting::where('id', 1)->first();
+        View::Share(compact('setting'));
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -176,5 +186,27 @@ class PostController extends Controller
         }
         Post::whereIn('id',explode(",",$deleteId))->delete();;
         return redirect()->back()->with('success', 'Successfully Deleted');
+    }
+
+    public function postfaqs(Request $request)
+    {
+
+        //return $request;
+        $postId = $request->postId;
+        $question = $request->question;
+        $answer = $request->answer;
+        if(!empty($question)){
+            return $len = count($question);
+           for($i=0; $i<$len; $i++){
+                Postfaq::create([
+                    'post_id' => $postId,
+                    'question' => $question[$i],
+                    'answer' => $answer[$i]
+                ]);
+                return redirect()->back()->with('success', 'Successfully Added');
+            }
+        }
+        return redirect()->back();
+
     }
 }

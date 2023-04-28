@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\{Category,Setting};
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $setting = Setting::where('id', 1)->first();
+        View::Share(compact('setting'));
+    }
     /**
      * Display a listing of the resource.
      */

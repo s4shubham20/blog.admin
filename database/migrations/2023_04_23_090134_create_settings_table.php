@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('logo');
             $table->string('fevicon');
             $table->string('robot');
-            $table->longText('headercode')->nullable();
-            $table->longText('footercode')->nullable();
+            $table->longText('header')->nullable();
+            $table->longText('footer')->nullable();
             $table->timestamps();
         });
     }

@@ -2,7 +2,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <img src="{{ asset('assets/front/643e0c30f1a54.png') }}" alt="643e0c30f1a54.png" class="w-50">
+                @if($setting != null)
+                <img src="{{ asset($setting->logo) }}" alt="{{ $setting->logo }}" class="w-50">
+                @endif
             </div>
             <div class="col-md-9 my-auto">
                 <div class="border text-center p-2">

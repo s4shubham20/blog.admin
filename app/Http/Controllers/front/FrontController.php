@@ -6,7 +6,7 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
-use App\Models\{Category,Post,Socialmedia,Newsletter};
+use App\Models\{Category,Post,Socialmedia,Newsletter,Setting};
 
 class FrontController extends Controller
 {
@@ -17,12 +17,17 @@ class FrontController extends Controller
         $categories = Category::where('status', 1)->get();
         $socialmedia = Socialmedia::where('status', 1)->get();
         $pages = Page::where('status', 1)->get();
-        View::share((compact('categories', 'socialmedia', 'pages')));
+        $setting = Setting::where('id', 1)->first();
+        View::share((compact('categories', 'socialmedia', 'pages', 'setting')));
     }
 
     public function index()
     {
-        return view('front.index');
+        $category = Category::where('status',1)->get();
+        $latestpost = Post::whereHas('category', function ($query){
+            $query->where('status',1);
+        })->where('status',1)->latest('id')->get()->take(5);
+        return view('front.index', compact('category','latestpost'));
     }
 
     public function post($slug)

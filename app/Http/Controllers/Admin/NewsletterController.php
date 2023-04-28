@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 
 class NewsletterController extends Controller
 {
+    public function __construct()
+    {
+        $setting = Setting::where('id', 1)->first();
+        View::Share(compact('setting'));
+    }
+
     /**
      * Display a listing of the resource.
      */

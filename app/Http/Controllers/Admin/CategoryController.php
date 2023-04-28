@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Setting;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\Admin\FormRequestSubmit;
 
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $setting = Setting::where('id', 1)->first();
+        View::Share(compact('setting'));
+    }
+
     /**
      * Display a listing of the resource.
      */

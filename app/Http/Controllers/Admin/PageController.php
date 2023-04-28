@@ -3,14 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Page;
+use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Crypt;
 
 class PageController extends Controller
 {
+
+    public function __construct()
+    {
+        $setting = Setting::where('id', 1)->first();
+        View::Share(compact('setting'));
+    }
+
     /**
      * Display a listing of the resource.
      */

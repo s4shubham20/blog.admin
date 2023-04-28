@@ -91,8 +91,8 @@
                             href="{{ route('social.index') }}"><span class="fa fa-eye"></span>&nbsp;View Page</a>
                     </nav>
                 </div>
-                <a class="nav-link {{ Request::is('admin/setting/create') || Request::is('admin/setting') ? 'active' : 'collapsed' }}"
-                    href="{{ route('setting.index') }}">
+                <a class="nav-link {{ Request::is('admin/setting/create') ? 'active' : 'collapsed' }}"
+                    href="{{ route('setting.create') }}">
                     <div class="sb-nav-link-icon"><i class="fa fa-cog"></i></div>
                     Setting
                 </a>

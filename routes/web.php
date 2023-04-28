@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth', 'middleware' => 'isA
     Route::resource('category', CategoryController::class);
     Route::resource('post', PostController::class);
     Route::post('post/deleteall', [PostController::class ,'deleteall'])->name('admin.post.deleteall');
+    Route::post('postfaqs', [PostController::class, 'postfaqs'])->name('admin.postfaqs');
     Route::resource('user', UserController::class);
     Route::resource('page', PageController::class);
     Route::resource('social', SocialMediaController::class);
