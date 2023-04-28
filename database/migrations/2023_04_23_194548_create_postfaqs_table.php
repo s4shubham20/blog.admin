@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->string('question');
-            $table->string('answer');
-            $table->string('image');
+            $table->longText('answer');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css">
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button{
             padding: 0px;
@@ -47,7 +48,7 @@
     <script src="{{ asset('assets/back/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.4.5.1/full-all/ckeditor.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script>
@@ -65,6 +66,19 @@
                 title: '{{ Session::get("success") }}',
                 showConfirmButton: false,
                 timer: 1500
+                });
+        }
+    </script>
+    @elseif(Session::has('error'))
+    <script>
+        const myTimeout = setTimeout(myGreeting, 1000);
+        function myGreeting() {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: '{{ Session::get("error") }}',
+                showConfirmButton: false,
+                timer: 2000
                 });
         }
     </script>

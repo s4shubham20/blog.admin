@@ -103,9 +103,10 @@ class PostController extends Controller
     public function edit(string $eid)
     {
         $id = Crypt::decrypt($eid);
+        $postfaqs = Postfaq::where('post_id', '=', $id)->get();
         $categories = Category::all();
         $post = Post::with('category')->find($id);
-        return view('back.post.edit', compact('post','categories'));
+        return view('back.post.edit', compact('post','categories', 'postfaqs'));
     }
 
     /**
@@ -190,23 +191,24 @@ class PostController extends Controller
 
     public function postfaqs(Request $request)
     {
-
-        //return $request;
         $postId = $request->postId;
         $question = $request->question;
-        $answer = $request->answer;
+        $postfaq = Postfaq::where('post_id',$postId)->count();
         if(!empty($question)){
-            return $len = count($question);
-           for($i=0; $i<$len; $i++){
+            if($postfaq > 0){
+                Postfaq::where('post_id', $postId)->delete();
+            }
+            $len = count($question);
+            for($i=0;$i<$len;$i++){
                 Postfaq::create([
                     'post_id' => $postId,
                     'question' => $question[$i],
-                    'answer' => $answer[$i]
+                    'answer' => $request->answer[$i]
                 ]);
-                return redirect()->back()->with('success', 'Successfully Added');
             }
+            return redirect()->back()->with('success', 'Successfully Added');
         }
-        return redirect()->back();
+        return redirect()->back()->with('error', 'All field are empty !');
 
     }
 }

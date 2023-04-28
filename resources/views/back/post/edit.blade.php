@@ -2,7 +2,7 @@
 @section('title', 'Post')
 @section('content')
 @section('css')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 @show
 <div class="container-fluid px-4">
     <div class="card mt-4">
@@ -142,21 +142,59 @@
             <form action="{{ route('admin.postfaqs') }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="postId" value="{{ $post->id }}">
                 @csrf
-                <div id="dynamic_field"></div>
-                <div class="mt-3">
-                    <button type="button" name="add" id="add" class="btn btn-primary">Add Faq</button>
-                    <button class="btn btn-success">Submit</button>
-                </div>
+                    @foreach ($postfaqs as $item)
+                    <div class="repeatable ">
+                        <div class="row mb-3">
+                            <div class="col-md-11"><label for="question" class="form-label">Question. </label><input
+                                type="text" name="question[]" class="form-control" id="question"
+                                placeholder="Question" required="" value="{{ $item->question }}">
+                                <label for="answer" class="form-label">Answer. </label>
+                                <textarea name="answer[]" class="form-control summernote" id="answer" placeholder="Answer" required="">{{ $item->answer }}</textarea>
+                            </div>
+                            <div class="col-md-1 mt-4">
+                                <div class="form-check mt-2"><input type="button" id="removeRow" class="btn btn-danger"
+                                    value="x">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    <div id="newRow"></div>
+                    <div class="row mb-3">
+                        <div class="col-sm-12">
+                            <button type="button" name="add" id="addRow" class="btn btn-primary">Add
+                                Faq</button>
+                            <button class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
             </form>
         </div>
     </div>
 </div>
 @endsection
 @section('js')
+<script>
+    CKEDITOR.replace('description');
+</script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-  <script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
+<script type="text/javascript">
+    $("#addRow").click(function() {
+        var html = '';
+        html +=
+            '<div class="repeatable "><div class="row mb-3"><div class="col-md-11"><label for="question" class="form-label">Question. </label><input type="text" name="question[]" class="form-control" id="question" placeholder="Question" required=""><label for="answer" class="form-label">Answer. </label><textarea name="answer[]" class="form-control summernote" id="answer" placeholder="Answer" required=""></textarea></div><div class="col-md-1 mt-4"><div class="form-check mt-2"><input type="button" id="removeRow" class="btn btn-danger" value="x"></div></div></div></div>';
+        $('#newRow').append(html);
+        $('.summernote').summernote();
     });
-  </script>
+
+    // remove row
+    $(document).on('click', '#removeRow', function() {
+        $(this).closest('.repeatable').remove();
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('.summernote').summernote();
+    });
+</script>
+
 @endsection
