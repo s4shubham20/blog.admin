@@ -19,4 +19,9 @@ class Category extends Model
         return $this->attributes['created_at'] = date('d-M-Y', strtotime($value));
     }
 
+    public function post()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

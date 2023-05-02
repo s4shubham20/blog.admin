@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @isset($setting)
-    <link rel="shortcut icon" href="{{ $setting !=  null ? $setting->fevicon :'' }}">
+
+    <link rel="shortcut icon" href="{{ $setting !=  null ? asset($setting->fevicon) :'' }}">
     @endisset
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -31,6 +32,9 @@
     <link rel="stylesheet" href="{{ asset('assets/front/css/owlcarousel/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/front/css/owlcarousel/owl.theme.default.min.css') }}">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    @if(isset($setting))
+        {!! $setting->header !!}
+    @endif
     @yield('css')
     <style>
         .radius-bd {
@@ -92,11 +96,15 @@
         <script src="{{ asset('assets/front/js/owlcarousel/owl.carousel.min.js') }}"></script>
     </div>
 </body>
-<script>
+@if(isset($setting))
+    {!! $setting->footer !!}
+@endif
+@yield('js')
+{{-- <script>
     $(document).ready(function() {
         $("#form").submit(function() {
             var email = $("#newsletter").val();
-            //alert(email);
+            alert(email);
             $.ajax({
                 url: "{{ route('newsletter') }}",
                 type: 'post',
@@ -128,7 +136,7 @@
             event.preventDefault();
         });
     })
-</script>
+</script> --}}
 <script>
     $('.owl-carousel').owlCarousel({
         loop:true,
@@ -148,4 +156,25 @@
         }
     })
 </script>
+@if(Session::has('success'))
+<script>
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: '{{ Session::get('success') }}',
+        showConfirmButton: false,
+        timer: 6000
+    });
+</script>
+@elseif(Session::has('error'))
+    <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: "{{ Session::get('error') }}",
+            showConfirmButton: false,
+            timer: 6000
+        });
+    </script>
+@endif
 </html>

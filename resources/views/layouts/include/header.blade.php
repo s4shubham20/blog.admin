@@ -18,11 +18,18 @@
                 <li><a class="dropdown-item" href="#!">Settings</a></li>
                 <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                 <li>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                    <form action="{{ route('logout') }}" method="post" class="d-none" id="logout-form">
+                        @csrf
+                    </form>
+                </li>
+                {{-- <li>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button class="dropdown-item">Logout</button>
                     </form>
-                </li>
+                </li> --}}
             </ul>
         </li>
     </ul>

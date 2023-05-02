@@ -14,7 +14,9 @@ class FrontController extends Controller
     public function __construct()
     {
 
-        $categories = Category::where('status', 1)->get();
+        $categories = Category::whereHas('post', function ($query){
+            $query->where('status', 1);
+        })->where('status', 1)->get();
         $socialmedia = Socialmedia::where('status', 1)->get();
         $pages = Page::where('status', 1)->get();
         $setting = Setting::where('id', 1)->first();
@@ -23,7 +25,9 @@ class FrontController extends Controller
 
     public function index()
     {
-        $category = Category::where('status',1)->get();
+        $category = Category::whereHas('post', function ($query){
+            $query->where('status',1);
+        })->where('status',1)->latest('id')->get();
         $latestpost = Post::whereHas('category', function ($query){
             $query->where('status',1);
         })->where('status',1)->latest('id')->get()->take(5);
@@ -77,8 +81,18 @@ class FrontController extends Controller
         ]);
         $newsletter = new Newsletter;
         $newsletter->email      = $ajaxrequest->email;
-        $newsletter->save();
-        return response()->json(['success' => 'Successfully']);
+        $saveNewsletter = $newsletter->save();
+        if($saveNewsletter){
+            return response()->json([
+                'status'  => 200,
+                'success' => 'Successfully'
+            ]);
+        }else{
+            return response()->json([
+                'status'  => 401,
+                'error' => 'Something went wrong'
+            ]);
+        }
     }
 
     public function pagedetail($slug)

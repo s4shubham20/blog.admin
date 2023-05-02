@@ -134,9 +134,9 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $eid)
+    public function destroy(Request $request)
     {
-        $id = Crypt::decrypt($eid);
+        $id = Crypt::decrypt($request->category_id);
         $category = Category::find($id);
         if(File::exists(public_path($category->image))){
             File::delete(public_path($category->image));

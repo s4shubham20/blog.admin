@@ -126,7 +126,6 @@
 </div>
 @endsection
 @section('js')
-<script src="https://cdn.ckeditor.com/4.4.5.1/full-all/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('description');
 </script>

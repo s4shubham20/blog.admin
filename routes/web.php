@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\{
     PostController, SocialMediaController, UserController,
     SettingController
 };
+use App\Http\Controllers\front\CommentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +30,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['prefix' => 'admin',  'middleware' => 'auth', 'middleware' => 'isAdmin'], function(){
     Route::resource('dashboard', AdminController::class);
     Route::resource('category', CategoryController::class);
+    Route::post('category/deletecat', [CategoryController::class, 'destroy']);
     Route::resource('post', PostController::class);
     Route::post('post/deleteall', [PostController::class ,'deleteall'])->name('admin.post.deleteall');
     Route::post('postfaqs', [PostController::class, 'postfaqs'])->name('admin.postfaqs');
@@ -46,3 +49,5 @@ Route::get('category/{slug}', [FrontController::class, 'post']);
 Route::get('post/{slug1}/{slug2}', [FrontController::class, 'postdetail']);
 Route::post('newsletter', [FrontController::class, 'newsletter'])->name('newsletter');
 Route::get('/{slug}', [FrontController::class, 'pagedetail']);
+Route::resource('comment', CommentController::class);
+Route::post('/comment/delete', [CommentController::class, 'destroy']);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\{Category,Setting};
@@ -21,7 +23,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('back.admin.index');
+        $category = Category::count();
+        $post = Post::count();
+        $user = User::where('role','0')->count();
+        return view('back.admin.index', compact('category','post', 'user'));
     }
 
     /**

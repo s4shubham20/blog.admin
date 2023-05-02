@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
+use App\Models\Setting;
+use App\Models\Category;
+use App\Models\Socialmedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class HomeController extends Controller
 {
@@ -14,6 +19,13 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $categories = Category::whereHas('post', function ($query){
+            $query->where('status', 1);
+        })->where('status', 1)->get();
+        $socialmedia = Socialmedia::where('status', 1)->get();
+        $pages = Page::where('status', 1)->get();
+        $setting = Setting::where('id', 1)->first();
+        View::share((compact('categories', 'socialmedia', 'pages', 'setting')));
     }
 
     /**
@@ -21,6 +33,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
     public function index()
     {
         return view('home');

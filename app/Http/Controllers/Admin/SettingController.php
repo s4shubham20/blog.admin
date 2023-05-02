@@ -119,8 +119,8 @@ class SettingController extends Controller
             'email' => 'required|unique:settings,email,'.$id,
             'mobile' => 'required|unique:settings,mobile,'.$id,
             'robot' => 'required',
-            'header' => 'required',
-            'footer' => 'required',
+            'header' => 'nullable',
+            'footer' => 'nullable',
         ]);
 
         if ($validator->fails()) {

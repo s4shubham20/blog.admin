@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                @if($setting != null)
+                @if(isset($setting))
                 <img src="{{ asset($setting->logo) }}" alt="{{ $setting->logo }}" class="w-50">
                 @endif
             </div>
@@ -13,6 +13,8 @@
             </div>
         </div>
     </div>
+</div>
+<div class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-green">
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -29,11 +31,22 @@
                         $categories = App\Models\Category::where('status', 1)->get();
                         $post = App\Models\Post::withCount('post')->where('status', 1)->get();
                     @endphp --}}
+
+                    @if(isset($categories))
                     @foreach ($categories as $item)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('category/'.$item->slug) }}">{{ $item->name }}</a>
                     </li>
                     @endforeach
+                    @endif
+                    @if(Auth::check())
+                    <li class="nav-item">
+                        <a href="javasctipt:void();" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        <form action="{{ route('logout') }}" method="post" class="d-none" id="logout-form">
+                            @csrf
+                        </form>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </div>
